@@ -7,6 +7,8 @@ define([
 
     return Component.extend({
         defaults: {
+            buttonSelector: '#add-new-task-button',
+            newTaskLabel: '',
             tasks: [
                 {id: 1, label: "Task 1", status: false},
                 {id: 2, label: "Task 2", status: true},
@@ -17,7 +19,7 @@ define([
         tasks2: [],
 
         initObservable: function() {
-            this._super().observe(['tasks', 'tasks2']);
+            this._super().observe(['tasks', 'tasks2', 'newTaskLabel']);
 
             // make a copy of tasks
             this.tasks2().push(...this.tasks());
@@ -41,6 +43,22 @@ define([
             });
 
             this.tasks(items);
+        },
+
+        addTask: function() {
+            this.tasks.push({
+               id: Math.floor(Math.random() * 100),
+               label: this.newTaskLabel(),
+               status: false
+            });
+            this.newTaskLabel('');
+        },
+
+        checkKey: function(data, event) {
+            if (event.keyCode === 13) {
+                event.preventDefault();
+                $(this.buttonSelector).click();
+            }
         },
 
         deleteTask: function(taskId) {

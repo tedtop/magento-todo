@@ -1,3 +1,26 @@
+<div class="form-container">
+    <input type="text"
+        class="task-input-field"
+        id="todo-task-input"
+        name="task"
+        data-bind="
+            value: newTaskLabel,
+            event: { 'keyup': checkKey }
+        "
+        placeholder="Add a new task..."
+    />
+    <div class="actions-toolbar">
+        <div class="primary">
+            <button type="button"
+                title="Add Task"
+                class="action save primary"
+                id="add-new-task-button"
+                data-bind="click: addTask"
+            ><span>Add Task</span></button>
+        </div>
+    </div>
+</div>
+
 <!-- ko if: ($data.tasks) -->
 <h2>Dynamic UiComponent</h2>
 <ul class="tasks">
