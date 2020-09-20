@@ -1,0 +1,23 @@
+<?php
+
+use Magento\Framework\View\Element\Template;
+
+/** @var Template $block */
+
+?>
+<h2>Static Html (view/frontend/templates/todo.phtml)</h2>
+<ul>
+    <li>Task 1</li>
+    <li>Task 2</li>
+    <li>Task 3</li>
+</ul>
+<div data-bind="scope: 'todo'">
+    <!-- ko template: getTemplate() --><!-- /ko -->
+</div>
+<script type="text/x-magento-init">
+    {
+        "*": {
+            "Magento_Ui/js/core/app": <?= $block->getJsLayout(); ?>
+        }
+    }
+</script>
