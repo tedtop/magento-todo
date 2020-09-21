@@ -51,10 +51,14 @@ class Index extends Action
 //        ]);
 //        $this->taskResource->save($task);
 
+        $task = $this->taskRepository->get(1);
+        $task->setData('status', 'complete');
+        $this->taskManagement->save($task);
+
         // Get task example
         $tasks = $this->taskRepository->getList($this->searchCriteriaBuilder->create())->getItems();
         var_dump($tasks);
 
-        return $this->resultFactory->create(ResultFactory::TYPE_PAGE);
+        //return $this->resultFactory->create(ResultFactory::TYPE_PAGE);
     }
 }
