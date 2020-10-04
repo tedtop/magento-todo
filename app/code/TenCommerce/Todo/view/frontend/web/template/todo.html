@@ -46,6 +46,8 @@
 <ul>
     <li repeat="foreach: tasks2, item: 'task'">
         <span translate="task().label"/>
+        | Status:
+        <span data-bind="text: typeof task().status === 'undefined' ? 'undefined' : task().status"></span>
     </li>
 </ul>
 <!-- /ko -->

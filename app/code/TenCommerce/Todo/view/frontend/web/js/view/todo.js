@@ -76,15 +76,21 @@ define([
                 content: 'Are you sure you want to delete this task?',
                 actions: {
                     confirm: function() {
+                        console.log('Running DELETE function');
                         var tasks = [];
 
                         if (self.tasks().length === 1) {
+                            console.log('Deleted last remaining task before forEach');
                             self.tasks(tasks);
                             return;
                         }
                         self.tasks().forEach(function (task) {
                             if (task.task_id !== taskId) {
-                                tasks.push(task);
+                                tasks.push(task); // tasks to keep
+                                console.log('Keeping: [task_id: ' + task.task_id + '] ' + task.label);
+                            } else {
+                                taskService.delete(task); // delete the one task
+                                console.log('Deleting: [task_id: ' + task.task_id + '] ' + task.label);
                             }
                         });
 
