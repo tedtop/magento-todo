@@ -5,6 +5,7 @@ namespace TenCommerce\Todo\Service;
 
 use Magento\Framework\Api\SearchCriteria\CollectionProcessor;
 use Magento\Framework\Api\SearchCriteriaInterface;
+use TenCommerce\Todo\Api\Data\TaskInterface;
 use TenCommerce\Todo\Api\Data\TaskSearchResultInterface;
 use TenCommerce\Todo\Api\Data\TaskSearchResultInterfaceFactory;
 use TenCommerce\Todo\Api\TaskRepositoryInterface;
@@ -55,7 +56,7 @@ class TaskRepository implements TaskRepositoryInterface
         return $searchResult;
     }
 
-    public function get(int $taskId)
+    public function get(int $taskId) : TaskInterface
     {
         $object = $this->taskFactory->create();
         $this->resource->load($object, $taskId);

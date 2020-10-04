@@ -1,8 +1,9 @@
 define([
     'uiComponent',
     'jquery',
-    'Magento_Ui/js/modal/confirm'
-], function(Component, $, modal) {
+    'Magento_Ui/js/modal/confirm',
+    'TenCommerce_Todo/js/service/task'
+], function(Component, $, modal, taskService) {
     'use strict';
 
     return Component.extend({
@@ -21,6 +22,12 @@ define([
         initObservable: function() {
             this._super().observe(['tasks', 'tasks2', 'newTaskLabel']);
 
+            var self = this;
+            taskService.getList().then(function(tasks) {
+                self.tasks(tasks);
+                return tasks;
+            });
+
             // make a copy of tasks
             this.tasks2().push(...this.tasks());
             this.tasks2().push({label: "Task 5"});
@@ -35,8 +42,9 @@ define([
             const taskId = $(event.target).data('id');
 
             var items = this.tasks().map(function (task) {
-                if (task.id === taskId) {
-                    task.status = !task.status;
+                if (task.task_id === taskId) {
+                    task.status = task.status === 'open' ? 'complete' : 'open';
+                    taskService.update(taskId, task.status);
                 }
 
                 return task;
@@ -75,7 +83,7 @@ define([
                             return;
                         }
                         self.tasks().forEach(function (task) {
-                            if (task.id !== taskId) {
+                            if (task.task_id !== taskId) {
                                 tasks.push(task);
                             }
                         });

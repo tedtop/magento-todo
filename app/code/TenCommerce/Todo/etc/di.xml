@@ -1,9 +1,12 @@
 <?xml version="1.0"?>
 <config xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
         xsi:noNamespaceSchemaLocation="urn:magento:framework:ObjectManager/etc/config.xsd">
-    <preference for="TenCommerce\Todo\Api\CustomerTaskListInterface" type="TenCommerce\Todo\Service\CustomerTaskList"/>
-    <preference for="TenCommerce\Todo\Api\TaskManagementInterface" type="TenCommerce\Todo\Service\TaskManagement"/>
-    <preference for="TenCommerce\Todo\Api\TaskRepositoryInterface" type="TenCommerce\Todo\Service\TaskRepository"/>
     <preference for="TenCommerce\Todo\Api\Data\TaskInterface" type="TenCommerce\Todo\Model\Task"/>
     <preference for="TenCommerce\Todo\Api\Data\TaskSearchResultInterface" type="TenCommerce\Todo\Model\ResourceModel\Task\Collection"/>
+
+    <preference for="TenCommerce\Todo\Api\TaskRepositoryInterface" type="TenCommerce\Todo\Service\TaskRepository"/>
+    <preference for="TenCommerce\Todo\Api\TaskManagementInterface" type="TenCommerce\Todo\Service\TaskManagement"/>
+    <preference for="TenCommerce\Todo\Api\TaskStatusManagementInterface" type="TenCommerce\Todo\Service\TaskStatusManagement"/>
+
+    <preference for="TenCommerce\Todo\Api\CustomerTaskListInterface" type="TenCommerce\Todo\Service\CustomerTaskList"/>
 </config>

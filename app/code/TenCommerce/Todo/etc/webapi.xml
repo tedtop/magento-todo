@@ -6,4 +6,16 @@
             <resource ref="anonymous"/>
         </resources>
     </route>
+    <route method="POST" url="/V1/customer/todo/task/update">
+        <service class="TenCommerce\Todo\Api\TaskStatusManagementInterface" method="change"/>
+        <resources>
+            <resource ref="anonymous"/>
+        </resources>
+    </route>
+    <route method="DELETE" url="/V1/customer/todo/task/delete">
+        <service class="TenCommerce\Todo\Api\TaskManagementInterface" method="delete"/>
+        <resources>
+            <resource ref="anonymous"/>
+        </resources>
+    </route>
 </routes>

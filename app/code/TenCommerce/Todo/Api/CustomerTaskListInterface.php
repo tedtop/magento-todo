@@ -5,6 +5,9 @@ namespace TenCommerce\Todo\Api;
 
 use TenCommerce\Todo\Api\Data\TaskInterface;
 
+/**
+ * @api
+ */
 interface CustomerTaskListInterface
 {
     /**
