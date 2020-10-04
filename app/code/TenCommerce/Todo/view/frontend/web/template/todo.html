@@ -22,7 +22,10 @@
 </div>
 
 <!-- ko if: ($data.tasks) -->
-<h2>Dynamic UiComponent</h2>
+<h2>Dynamic UiComponent <small>(Total: <span data-bind="text: tasks().length"></span>)</small></h2>
+<!-- ko if: (tasks().length == 0) -->
+<div class="message info empty"><span>Empty list</span></div>
+<!-- /ko -->
 <ul class="tasks">
     <li repeat="foreach: tasks, item: 'task'">
         <a data-bind="
@@ -32,7 +35,7 @@
             },
             click: switchStatus
         "></a>
-        <span class="label" translate="task().label"/>
+        <span class="label" data-bind="text: '[' + task().task_id + '] ' + task().label"/>
         <a class="action delete" data-bind="
             attr: {
                 'data-id': task().task_id
@@ -42,7 +45,7 @@
     </li>
 </ul>
 
-<h2>Dynamic UiComponent 2</h2>
+<h2>Dynamic UiComponent List Shuffle</h2>
 <ul>
     <li repeat="foreach: tasks2, item: 'task'">
         <span translate="task().label"/>

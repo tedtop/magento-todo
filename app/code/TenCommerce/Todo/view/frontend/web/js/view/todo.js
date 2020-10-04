@@ -2,8 +2,9 @@ define([
     'uiComponent',
     'jquery',
     'Magento_Ui/js/modal/confirm',
-    'TenCommerce_Todo/js/service/task'
-], function(Component, $, modal, taskService) {
+    'TenCommerce_Todo/js/service/task',
+    'TenCommerce_Todo/js/model/loader'
+], function(Component, $, modal, taskService, loader) {
     'use strict';
 
     return Component.extend({
@@ -53,13 +54,49 @@ define([
             this.tasks(items);
         },
 
-        addTask: function() {
-            this.tasks.push({
-               id: Math.floor(Math.random() * 100),
-               label: this.newTaskLabel(),
-               status: false
-            });
+        addTask: async function() {
+            var self = this;
+
+            // new task template
+            var newTask = {
+                //task_id: Math.floor(Math.random() * 100),
+                label: self.newTaskLabel(),
+                status: 'complete'
+            };
+
+            // // === one way ===
+            // loader.startLoader();
+            // taskService.create(newTask)
+            //     .then(function(taskId) {
+            //         newTask.task_id = taskId;
+            //         self.tasks.push(newTask);
+            //     })
+            //     .finally(function() {
+            //         setTimeout(function() {
+            //             loader.stopLoader()
+            //         }, 500); // add extra long Magento wait
+            //         self.newTaskLabel('');
+            //     });
+
+            // === my way ===
+            // save task and wait for id from db
+            //console.log('Saving task...');
+            var start = new Date().getTime();
+            loader.startLoader(); // spinner
+
+            var newTaskId = await taskService.create(newTask);
+            //console.log('newTaskId: ' + newTaskId);
+
+            // log execution time
+            var end = new Date().getTime();
+            var time = end - start;
+            console.log('Add task [' + newTaskId + '] latency: ' + time + 'ms');
+
+            // Add id to task obj and push to view
+            newTask.task_id = newTaskId;
+            this.tasks.push(newTask);
             this.newTaskLabel('');
+            loader.stopLoader(); // spinner
         },
 
         checkKey: function(data, event) {
@@ -79,11 +116,6 @@ define([
                         console.log('Running DELETE function');
                         var tasks = [];
 
-                        if (self.tasks().length === 1) {
-                            console.log('Deleted last remaining task before forEach');
-                            self.tasks(tasks);
-                            return;
-                        }
                         self.tasks().forEach(function (task) {
                             if (task.task_id !== taskId) {
                                 tasks.push(task); // tasks to keep

@@ -6,6 +6,15 @@ define(['mage/storage'], function(storage) {
            return await storage.get('rest/V1/customer/todo/tasks');
        },
 
+       create: async function(taskObjNotId) {
+           return await storage.post(
+               'rest/V1/customer/todo/task/create',
+               JSON.stringify({
+                   task: taskObjNotId
+               })
+           );
+       },
+
        update: async function(taskId, status) {
            return await storage.post(
                'rest/V1/customer/todo/task/update',
@@ -16,11 +25,11 @@ define(['mage/storage'], function(storage) {
            );
        },
 
-       delete: async function(taskObj) {
+       delete: async function(taskObjNotId) {
            return await storage.post(
                'rest/V1/customer/todo/task/delete',
                JSON.stringify({
-                   task: taskObj
+                   task: taskObjNotId
                })
            );
        }
